@@ -28,7 +28,7 @@ class BlurDataset(data.Dataset):
         orig_f = self.all_orig_file[index]
         blur_f = self.all_blur_file[index]
         try:
-            orig_img = Image.open(orig_f).convert("L")
+            orig_img = Image.open(orig_f).convert("RGB")
             blur_img = Image.open(blur_f).convert("RGB")
         except Exception as e:
             print("Error image: ", orig_f)

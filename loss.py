@@ -40,7 +40,7 @@ class MSE_OHEM_Loss(nn.Module):
         for i in range(batch_size):
             output_img = output_imgs[i].view(1, -1)
             target_img = target_imgs[i].view(1, -1)
-            positive_mask = (target_img < 0.5).float()
+            positive_mask = (target_img < 0.8).float()
             sample_loss = self.mse_loss(output_img, target_img)
             positive_loss = torch.masked_select(sample_loss, positive_mask.byte())
             negative_loss = torch.masked_select(sample_loss, 1 - positive_mask.byte())

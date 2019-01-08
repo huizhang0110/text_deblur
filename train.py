@@ -42,7 +42,6 @@ def evaluate_network(epoch, network, eval_dataloader):
     for orig_images, blur_images in eval_dataloader:
         output_images = network(blur_images.cuda()).cpu()
         for blur_img, output_img, orig_img in zip(blur_images, output_images, orig_images):
-            blur_img = blur_img[0].unsqueeze(0)
             image_tensor = torch.stack((blur_img, output_img, orig_img), 0)
             torchvision.utils.save_image(image_tensor, os.path.join(log_dir, "%d.jpg" % cnt),
                     nrow=3, normalize=True, range=(0, 1), scale_each=True, pad_value=0)
@@ -102,13 +101,14 @@ for epoch in range(args.max_epoches):
         if step % args.print_every == 0:
             avg_loss = total_loss / args.print_every
             total_loss = 0
-            print("epoch: %03d, step: %05d, loss: %.5f" % (epoch, step, avg_loss))
+            lr = optimizer.param_groups[0]["lr"]
+            print("epoch: %03d, step: %05d, lr: %.6f, loss: %.5f" % (epoch, step, lr, avg_loss))
         step += 1
 
     evaluate_network(epoch, network, eval_dataloader)
 
     save_state(ckpt_dir, epoch, network, optimizer)    
 
-    if epoch in [30, 40]:
+    if epoch in [40, 80]:
         adjust_learning_rate(optimizer)
 

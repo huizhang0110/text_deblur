@@ -65,7 +65,7 @@ class DeblurModel(nn.Module):
                 conv3x3_bn_relu(64 * expansion, 64 * expansion))
         self.pss_map = nn.Sequential(
                 conv3x3_bn_relu(64 * expansion + 3, 64 * expansion),
-                conv1x1(64 * expansion, 1))
+                conv1x1(64 * expansion, 3))
 
         self.deconv4.apply(weights_init)
         self.deconv3.apply(weights_init)
