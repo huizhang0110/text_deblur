@@ -2,7 +2,7 @@
 
 ## Contributors
 
-- huizhang0110
+- [huizhang0110](https://github.com/huizhang0110)
 
 ## Project Goal
 
